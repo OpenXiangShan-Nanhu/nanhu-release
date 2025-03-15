@@ -1,3 +1,6 @@
 [submodule "Nanhu-V5"]
 	path = Nanhu-V5
 	url = https://github.com/OpenXiangShan-Nanhu/Nanhu-V5.git
+[submodule "NEMU"]
+	path = NEMU
+	url = https://github.com/OpenXiangShan/NEMU.git

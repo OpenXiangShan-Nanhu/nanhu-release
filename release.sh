@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export NOOP_HOME=$(pwd)/Nanhu-V5 
+export NOOP_HOME=$(pwd)/Nanhu-V5
+export NEMU=$(pwd)/NEMU
 
 function release_xstop() {
     make -C $NOOP_HOME verilog RELEASE=1 XSTOP_PREFIX=bosc_ BUILD_DIR=xstop 2>&1 | tee $release_dir/.release_log/xstop.log
@@ -24,10 +25,15 @@ function release_env() {
     sed -i 's/RAM_SIZE 0x7ff80000000UL/RAM_SIZE 0xff80000000UL/' $env_dir/difftest/config/config.h #(40 bit paddr)
 }
 
+function release_nemu() {
+    make -C $NOOP_HOME riscv64-xs-ref_defconfig
+    make -C $NOOP_HOME -j
+    cp -r NEMU $release_dir
+}
+
 function release_misc() {
     cp -r NEMU Makefile bin $release_dir
 }
-
 
 git -C $NOOP_HOME clean -fd
 rm -rf $NOOP_HOME/build
